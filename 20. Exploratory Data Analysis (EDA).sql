@@ -1,6 +1,5 @@
 -- ============================================
 -- FILE: Exploratory Data Analysis (EDA)
--- TOPICS: Aggregations, Rolling totals, Rankings, Top-N analysis
 -- ============================================
 
 -- ============================================
@@ -13,8 +12,6 @@ Goals:
 - Identify outliers
 - Discover relationships
 - Generate hypotheses
-
-Think of it as "interviewing" your data.
 */
 
 -- ============================================
@@ -183,43 +180,3 @@ company_rankings AS
 SELECT * 
 FROM company_rankings
 WHERE company_rank <= 5;  -- Top 5 companies per year
-
-
--- ============================================
--- IMPORTANT NOTE: WHERE vs HAVING with Window Functions
--- ============================================
-/*
-In MySQL, window functions are calculated AFTER WHERE and HAVING.
-That's why this doesn't work:
-
-SELECT *, DENSE_RANK() OVER(...) AS company_rank
-FROM ...
-WHERE company_rank <= 5  -- ERROR! company_rank doesn't exist yet
-
-SOLUTION: Use a CTE or subquery to create the rank first, then filter.
-That's why we needed an extra CTE (company_rankings) above.
-*/
-
-
--- ============================================
--- QUICK REFERENCE: EDA Techniques
--- ============================================
-/*
-Technique                    | Purpose
------------------------------|-----------------------------------
-MAX/MIN                      | Find extremes/outliers
-GROUP BY + SUM/COUNT         | Aggregate by category
-ORDER BY DESC                | Find top/bottom performers
-SUBSTRING + GROUP BY         | Time series (by month)
-SUM() OVER(ORDER BY ...)     | Rolling totals (cumulative sums)
-ROW_NUMBER/RANK/DENSE_RANK   | Ranking within groups
-CTE + WHERE rank <= N        | Top N per category
-YEAR() / MONTH()             | Date extraction
-
-Common EDA Questions:
-- What are the max/min values?
-- What's the distribution across categories?
-- How does this trend over time?
-- What are the top/bottom 5?
-- Are there any outliers or anomalies?
-*/
