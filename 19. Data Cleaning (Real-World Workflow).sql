@@ -1,6 +1,5 @@
 -- ============================================
 -- FILE: Data Cleaning (Real-World Workflow)
--- TOPICS: Removing duplicates, standardizing, NULL handling, removing columns
 -- ============================================
 
 -- ============================================
@@ -11,8 +10,6 @@
 2. Standardize the Data - Fix formats, spelling, inconsistencies
 3. Handle Null/Blank Values - Fill or remove missing data
 4. Remove Unnecessary Columns - Drop columns that aren't useful
-
-CRITICAL RULE: NEVER work on raw data! Always create a staging copy.
 */
 
 -- ============================================
@@ -196,27 +193,3 @@ DROP COLUMN row_num;
 -- ============================================
 SELECT *
 FROM layoffs_staging2;
-
-
--- ============================================
--- KEY TECHNIQUES LEARNED
--- ============================================
-/*
-TRIM() - Remove leading/trailing spaces
-    - TRIM(column) - removes both sides
-    - TRIM(TRAILING '.' FROM column) - removes trailing periods
-
-STR_TO_DATE() - Convert string to date
-    - '%m/%d/%Y' - month/day/year format
-
-ROW_NUMBER() OVER(PARTITION BY ...) - Identify duplicates
-
-Self-Join for populating NULLs - Use same table twice with alias
-
-ORDER BY 1 - Sorts by first column (column position, not name)
-
-Workflow Rule:
-    1. NEVER touch raw data
-    2. Test with SELECT before UPDATE
-    3. Verify results after each step
-*/
